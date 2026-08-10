@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CaçambaExpress — Aluguel de Caçamba para Entulho</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; }
+    .icon-svg { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .icon-svg svg { width: 100%; height: 100%; }
+
+    .hero {
+      background: linear-gradient(135deg, #166534 0%, #15803d 50%, #22c55e 100%);
+      color: white;
+      padding: 80px 20px 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: #f8fafc;
+      clip-path: ellipse(60% 100% at 50% 100%);
+    }
+    .hero-icon {
+      width: 80px; height: 80px;
+      margin: 0 auto 20px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .hero h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 12px; }
+    .hero p { font-size: 1.15rem; opacity: 0.95; max-width: 600px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .hero-badge .icon-svg { width: 18px; height: 18px; }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .icon-wrap {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+      padding: 10px;
+    }
+    .hero-stat .num { font-size: 1.3rem; font-weight: 800; }
+    .hero-stat .label { font-size: 0.85rem; opacity: 0.85; }
+
+    .navbar {
+      background: white;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .navbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.4rem; font-weight: 800; color: #166534;
+    }
+    .logo .icon-svg { width: 32px; height: 32px; }
+    .logo span { color: #22c55e; }
+    .nav-whatsapp {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .nav-whatsapp:hover { background: #bbf7d0; transform: scale(1.02); }
+    .nav-whatsapp .icon-svg { width: 20px; height: 20px; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 60px 0; }
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 10px;
+    }
+    .section-title .icon-svg { width: 36px; height: 36px; }
+    .section-subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(22,101,52,0.15);
+      border-color: #22c55e;
+    }
+    .card-popular {
+      border-color: #f59e0b;
+      position: relative;
+    }
+    .card-popular::before {
+      content: 'MAIS POPULAR';
+      position: absolute;
+      top: 16px; right: -40px;
+      background: #f59e0b;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 5px 45px;
+      transform: rotate(45deg);
+      letter-spacing: 0.5px;
+    }
+    .card-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      padding: 14px;
+    }
+    .card h3 { font-size: 1.3rem; font-weight: 700; color: #166534; margin-bottom: 6px; }
+    .card .size-label { color: #64748b; font-size: 0.9rem; margin-bottom: 16px; }
+    .card .price { font-size: 2.2rem; font-weight: 800; color: #166534; }
+    .card .price-period { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; }
+
+    .features-list { list-style: none; margin-bottom: 24px; }
+    .features-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 0.95rem;
+      color: #475569;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .features-list li:last-child { border-bottom: none; }
+    .features-list li .check {
+      width: 24px; height: 24px;
+      background: #dcfce7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 4px;
+    }
+    .features-list li .check .icon-svg { width: 14px; height: 14px; }
+
+    .btn-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .btn-whatsapp:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(37,211,102,0.35);
+    }
+    .btn-whatsapp .icon-svg { width: 22px; height: 22px; }
+
+    .duration-section {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      margin-bottom: 40px;
+    }
+    .duration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .duration-btn {
+      padding: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      font-weight: 600;
+      color: #475569;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .duration-btn:hover { border-color: #22c55e; color: #166534; }
+    .duration-btn.active {
+      border-color: #166534;
+      background: #dcfce7;
+      color: #166534;
+    }
+    .duration-btn .icon-svg { width: 28px; height: 28px; margin-bottom: 2px; }
+    .duration-btn .days { font-size: 1.3rem; font-weight: 800; }
+    .duration-btn .label { font-size: 0.8rem; opacity: 0.8; }
+
+    .visual-section {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      margin-bottom: 40px;
+    }
+    .visual-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .visual-item {
+      text-align: center;
+      padding: 24px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .visual-item:hover {
+      border-color: #22c55e;
+      background: #f0fdf4;
+      transform: translateY(-4px);
+    }
+    .visual-item .cacamba-svg {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 12px;
+    }
+    .visual-item .cacamba-name { font-weight: 700; color: #166534; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .visual-item .cacamba-name .icon-svg { width: 18px; height: 18px; }
+    .visual-item .cacamba-size { color: #64748b; font-size: 0.8rem; margin-top: 2px; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    .info-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: all 0.3s ease;
+    }
+    .info-card:hover { transform: translateY(-4px); }
+    .info-card .icon-wrap {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      padding: 14px;
+    }
+    .info-card h4 { font-size: 1.1rem; font-weight: 700; color: #166534; margin-bottom: 8px; }
+    .info-card p { color: #64748b; font-size: 0.9rem; line-height: 1.5; }
+
+    .footer-cta {
+      background: linear-gradient(135deg, #166534, #15803d);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      border-radius: 24px;
+      margin: 40px 20px;
+    }
+    .footer-cta .big-icon {
+      width: 64px; height: 64px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      padding: 14px;
+    }
+    .footer-cta h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; }
+    .footer-cta p { opacity: 0.9; margin-bottom: 24px; }
+    .footer-cta .btn-large {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: #25d366;
+      color: white;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .footer-cta .btn-large:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(37,211,102,0.4);
+    }
+    .footer-cta .btn-large .icon-svg { width: 24px; height: 24px; }
+
+    .selection-bar {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 16px 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      display: none;
+      align-items: center;
+      gap: 16px;
+      z-index: 999;
+      border: 2px solid #22c55e;
+      animation: slideUp 0.4s ease;
+    }
+    .selection-bar.visible { display: flex; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    .selection-bar .icon-svg { width: 22px; height: 22px; }
+    .selection-bar .summary { font-weight: 600; color: #166534; }
+    .selection-bar .btn-mini {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      background: #25d366;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .selection-bar .btn-mini .icon-svg { width: 18px; height: 18px; }
+
+    .float-whatsapp {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      animation: pulse 2s infinite;
+      padding: 16px;
+    }
+    .float-whatsapp:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 6px 30px rgba(37,211,102,0.7); }
+    }
+    .float-whatsapp .icon-svg { width: 32px; height: 32px; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .step-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      position: relative;
+    }
+    .step-number {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 32px;
+      background: #166534;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .step-card .icon-wrap {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      padding: 12px;
+    }
+    .step-card h4 { font-weight: 700; color: #166534; margin-bottom: 6px; }
+    .step-card p { color: #64748b; font-size: 0.9rem; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.8rem; }
+      .hero-icon { width: 60px; height: 60px; padding: 12px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .selection-bar {
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+        text-align: center;
+        padding: 14px 20px;
+      }
+      .navbar-inner { flex-wrap: wrap; gap: 10px; }
+      .nav-whatsapp { padding: 8px 14px; font-size: 0.8rem; }
+      .section-title { font-size: 1.5rem; }
+      .section-title .icon-svg { width: 28px; height: 28px; }
+    }
+  
+    /* ===== MODAIS ===== */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    .modal-overlay.active { display: flex; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-card {
+      background: white;
+      border-radius: 20px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      animation: slideUpModal 0.35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes slideUpModal {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 28px;
+      border-bottom: 1px solid #e2e8f0;
+      background: linear-gradient(135deg, #166534, #15803d);
+      color: white;
+      flex-shrink: 0;
+    }
+    .modal-header h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .modal-header .icon-svg { width: 24px; height: 24px; }
+    .modal-close {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.35); transform: scale(1.05); }
+    .modal-body {
+      padding: 28px;
+      overflow-y: auto;
+      line-height: 1.7;
+      color: #334155;
+    }
+    .modal-body h4 {
+      color: #166534;
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 20px 0 8px;
+    }
+    .modal-body h4:first-of-type { margin-top: 0; }
+    .modal-body p { margin: 0 0 12px; font-size: 0.92rem; }
+    .modal-body ul { margin: 0 0 12px 18px; padding: 0; }
+    .modal-body ul li { margin-bottom: 6px; font-size: 0.92rem; }
+    .modal-body strong { color: #1e293b; }
+    @media (max-width: 768px) {
+      .modal-card { max-height: 90vh; border-radius: 16px; }
+      .modal-header { padding: 16px 20px; }
+      .modal-header h3 { font-size: 1rem; }
+      .modal-body { padding: 20px; }
+    }
+
+  </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<!-- ===== SVG ICONS DEFINITIONS ===== -->
+<svg style="display:none;">
+  <defs>
+    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+    </symbol>
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </symbol>
+    <symbol id="icon-calendar-days" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="8" y1="18" x2="8" y2="18.01"/><line x1="12" y1="18" x2="12" y2="18.01"/><line x1="16" y1="18" x2="16" y2="18.01"/>
+    </symbol>
+    <symbol id="icon-calendar-week" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h8"/>
+    </symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+    </symbol>
+    <symbol id="icon-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 9h4"/><path d="M10 13h4"/>
+    </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+    </symbol>
+    <symbol id="icon-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/>
+    </symbol>
+    <symbol id="icon-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+    </symbol>
+    <symbol id="icon-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22" x2="12" y2="12"/>
+    </symbol>
+    <symbol id="icon-hammer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m17 11-3-3 5.5-5.5a2.12 2.12 0 0 1 3 3L17 11z"/><path d="m10 18-3-3 5.5-5.5a2.12 2.12 0 0 1 3 3L10 18z"/><path d="M2 22l3-3"/><path d="M6 18l3 3"/>
+    </symbol>
+    <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </symbol>
+    <symbol id="icon-recycle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.217 5.604"/><path d="m15 10-3-3 3-3"/>
+    </symbol>
+    <symbol id="icon-filetext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+    </symbol>
+    <symbol id="icon-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </symbol>
+    <symbol id="icon-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </symbol>
+    <symbol id="icon-pointer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6"/>
+    </symbol>
+    <symbol id="icon-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
+    </symbol>
+    <symbol id="icon-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>
+    </symbol>
+    <symbol id="icon-factory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/>
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </symbol>
+    <symbol id="icon-mappin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+    </symbol>
+    <symbol id="icon-dollar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="logo">
+      <span class="icon-svg"><svg><use href="#icon-truck"/></svg></span>
+      Caçamba<span>Express</span>
+    </div>
+    <a href="https://wa.me/5511951972304?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20um%20orçamento%20de%20caçamba." target="_blank" class="nav-whatsapp">
+      <span class="icon-svg"><svg><use href="#icon-whatsapp"/></svg></span> Fale no WhatsApp
+    </a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+    </svg>
+  </div>
+  <div class="hero-badge">
+    <span class="icon-svg"><svg><use href="#icon-check"/></svg></span> Atendimento em toda a região
+  </div>
+  <h1>Aluguel de Caçamba para Entulho</h1>
+  <p>Descarte seu entulho com segurança, rapidez e o melhor preço do mercado. Escolha o tamanho, os dias e solicite pelo WhatsApp!</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <div class="num">24h</div>
+      <div class="label">Entrega rápida</div>
+    </div>
+    <div class="hero-stat">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+          <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.217 5.604"/><path d="m15 10-3-3 3-3"/>
+        </svg>
+      </div>
+      <div class="num">100%</div>
+      <div class="label">Descarte correto</div>
+    </div>
+    <div class="hero-stat">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+        </svg>
+      </div>
+      <div class="num">10+</div>
+      <div class="label">Anos de experiência</div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ===== COMO FUNCIONA ===== -->
+  <section class="section">
+    <h2 class="section-title">
+      <span class="icon-svg"><svg><use href="#icon-clipboard"/></svg></span> Como funciona?
+    </h2>
+    <p class="section-subtitle">Em apenas 4 passos você recebe sua caçamba na porta da sua obra</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6"/>
+          </svg>
+        </div>
+        <h4>Escolha no site</h4>
+        <p>Selecione o tamanho e a quantidade de dias que precisa.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+        </div>
+        <h4>Chame no WhatsApp</h4>
+        <p>Envie seu pedido com um clique, já com tudo preenchido.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+          </svg>
+        </div>
+        <h4>Receba em casa</h4>
+        <p>Entregamos no mesmo dia ou em até 24 horas.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.217 5.604"/><path d="m15 10-3-3 3-3"/>
+          </svg>
+        </div>
+        <h4>Descarte correto</h4>
+        <p>Retiramos e destinamos o entulho de forma sustentável.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CAÇAMBAS DISPONÍVEIS (VISUAL) ===== -->
+  <section class="section">
+    <h2 class="section-title">
+      <span class="icon-svg"><svg><use href="#icon-trash"/></svg></span> Nossas Caçambas Disponíveis
+    </h2>
+    <p class="section-subtitle">De pequenas reformas a grandes obras, temos a caçamba ideal para você</p>
+    <div class="visual-section">
+      <div class="visual-grid">
+        <div class="visual-item">
+          <svg class="cacamba-svg" viewBox="0 0 100 100">
+            <rect x="20" y="40" width="60" height="45" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+            <rect x="25" y="35" width="50" height="8" rx="2" fill="#bbf7d0" stroke="#166534" stroke-width="1.5"/>
+            <circle cx="32" cy="90" r="6" fill="#475569"/>
+            <circle cx="68" cy="90" r="6" fill="#475569"/>
+            <text x="50" y="68" text-anchor="middle" fill="#166534" font-size="12" font-weight="700">3m³</text>
+          </svg>
+          <div class="cacamba-name">
+            <span class="icon-svg"><svg><use href="#icon-trash"/></svg></span> Mini
+          </div>
+          <div class="cacamba-size">3m³ — Pequenas reformas</div>
+        </div>
+        <div class="visual-item">
+          <svg class="cacamba-svg" viewBox="0 0 100 100">
+            <rect x="15" y="35" width="70" height="50" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+            <rect x="20" y="30" width="60" height="8" rx="2" fill="#bbf7d0" stroke="#166534" stroke-width="1.5"/>
+            <circle cx="28" cy="90" r="6" fill="#475569"/>
+            <circle cx="72" cy="90" r="6" fill="#475569"/>
+            <text x="50" y="66" text-anchor="middle" fill="#166534" font-size="12" font-weight="700">5m³</text>
+          </svg>
+          <div class="cacamba-name">
+            <span class="icon-svg"><svg><use href="#icon-package"/></svg></span> Média
+          </div>
+          <div class="cacamba-size">5m³ — Reformas residenciais</div>
+        </div>
+        <div class="visual-item">
+          <svg class="cacamba-svg" viewBox="0 0 100 100">
+            <rect x="10" y="30" width="80" height="55" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+            <rect x="15" y="25" width="70" height="8" rx="2" fill="#bbf7d0" stroke="#166534" stroke-width="1.5"/>
+            <circle cx="25" cy="90" r="6" fill="#475569"/>
+            <circle cx="75" cy="90" r="6" fill="#475569"/>
+            <text x="50" y="64" text-anchor="middle" fill="#166534" font-size="12" font-weight="700">7m³</text>
+          </svg>
+          <div class="cacamba-name">
+            <span class="icon-svg"><svg><use href="#icon-building"/></svg></span> Grande
+          </div>
+          <div class="cacamba-size">7m³ — Obras maiores</div>
+        </div>
+        <div class="visual-item">
+          <svg class="cacamba-svg" viewBox="0 0 100 100">
+            <rect x="5" y="25" width="90" height="60" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+            <rect x="10" y="20" width="80" height="8" rx="2" fill="#bbf7d0" stroke="#166534" stroke-width="1.5"/>
+            <circle cx="22" cy="90" r="6" fill="#475569"/>
+            <circle cx="78" cy="90" r="6" fill="#475569"/>
+            <text x="50" y="62" text-anchor="middle" fill="#166534" font-size="12" font-weight="700">10m³</text>
+          </svg>
+          <div class="cacamba-name">
+            <span class="icon-svg"><svg><use href="#icon-factory"/></svg></span> Extra
+          </div>
+          <div class="cacamba-size">10m³ — Demolições</div>
+        </div>
+        <div class="visual-item">
+          <svg class="cacamba-svg" viewBox="0 0 100 100">
+            <rect x="2" y="20" width="96" height="65" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+            <rect x="7" y="15" width="86" height="8" rx="2" fill="#bbf7d0" stroke="#166534" stroke-width="1.5"/>
+            <circle cx="20" cy="90" r="6" fill="#475569"/>
+            <circle cx="80" cy="90" r="6" fill="#475569"/>
+            <text x="50" y="60" text-anchor="middle" fill="#166534" font-size="11" font-weight="700">15m³</text>
+          </svg>
+          <div class="cacamba-name">
+            <span class="icon-svg"><svg><use href="#icon-building"/></svg></span> Industrial
+          </div>
+          <div class="cacamba-size">15m³ — Obras industriais</div>
+        </div>
+        <div class="visual-item">
+          <svg class="cacamba-svg" viewBox="0 0 100 100">
+            <rect x="0" y="15" width="100" height="70" rx="4" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+            <rect x="5" y="10" width="90" height="8" rx="2" fill="#bbf7d0" stroke="#166534" stroke-width="1.5"/>
+            <circle cx="18" cy="90" r="6" fill="#475569"/>
+            <circle cx="82" cy="90" r="6" fill="#475569"/>
+            <text x="50" y="58" text-anchor="middle" fill="#166534" font-size="11" font-weight="700">20m³</text>
+          </svg>
+          <div class="cacamba-name">
+            <span class="icon-svg"><svg><use href="#icon-truck"/></svg></span> Roll-on
+          </div>
+          <div class="cacamba-size">20m³ — Maior volume</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ESCOLHA A DURAÇÃO ===== -->
+  <section class="section">
+    <h2 class="section-title">
+      <span class="icon-svg"><svg><use href="#icon-calendar"/></svg></span> Por quantos dias você precisa?
+    </h2>
+    <p class="section-subtitle">Selecione a quantidade de dias para ver os preços atualizados</p>
+    <div class="duration-section">
+      <div class="duration-grid" id="durationGrid">
+        <button class="duration-btn active" data-days="1" onclick="selectDuration(1)">
+          <span class="icon-svg"><svg><use href="#icon-sun"/></svg></span>
+          <span class="days">1</span>
+          <span class="label">dia</span>
+        </button>
+        <button class="duration-btn" data-days="3" onclick="selectDuration(3)">
+          <span class="icon-svg"><svg><use href="#icon-calendar"/></svg></span>
+          <span class="days">3</span>
+          <span class="label">dias</span>
+        </button>
+        <button class="duration-btn" data-days="5" onclick="selectDuration(5)">
+          <span class="icon-svg"><svg><use href="#icon-calendar-days"/></svg></span>
+          <span class="days">5</span>
+          <span class="label">dias</span>
+        </button>
+        <button class="duration-btn" data-days="7" onclick="selectDuration(7)">
+          <span class="icon-svg"><svg><use href="#icon-calendar-week"/></svg></span>
+          <span class="days">7</span>
+          <span class="label">dias</span>
+        </button>
+        <button class="duration-btn" data-days="10" onclick="selectDuration(10)">
+          <span class="icon-svg"><svg><use href="#icon-chart"/></svg></span>
+          <span class="days">10</span>
+          <span class="label">dias</span>
+        </button>
+        <button class="duration-btn" data-days="15" onclick="selectDuration(15)">
+          <span class="icon-svg"><svg><use href="#icon-building"/></svg></span>
+          <span class="days">15</span>
+          <span class="label">dias</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PLANOS COM PREÇOS ===== -->
+  <section class="section">
+    <h2 class="section-title">
+      <span class="icon-svg"><svg><use href="#icon-dollar"/></svg></span> Escolha o tamanho e peça pelo WhatsApp
+    </h2>
+    <p class="section-subtitle">Clique em "Quero esta caçamba" para enviar seu pedido já preenchido</p>
+    <div class="cards-grid" id="cardsGrid">
+      <!-- Cards gerados via JS -->
+    </div>
+  </section>
+
+  <!-- ===== POR QUE ESCOLHER ===== -->
+  <section class="section">
+    <h2 class="section-title">
+      <span class="icon-svg"><svg><use href="#icon-shield"/></svg></span> Por que escolher a CaçambaExpress?
+    </h2>
+    <p class="section-subtitle">Compromisso com você e com o meio ambiente</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h4>Entrega Rápida</h4>
+        <p>Entregamos no mesmo dia ou no máximo em 24h após a confirmação do pedido.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.217 5.604"/><path d="m15 10-3-3 3-3"/>
+          </svg>
+        </div>
+        <h4>Descarte Consciente</h4>
+        <p>Todo o entulho é destinado corretamente em aterros licenciados e centros de reciclagem.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+          </svg>
+        </div>
+        <h4>Documentação OK</h4>
+        <p>Emitimos nota fiscal e todos os documentos necessários para sua obra.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+          </svg>
+        </div>
+        <h4>Experiência</h4>
+        <p>Mais de 10 anos no mercado, atendendo milhares de clientes satisfeitos.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h4>Segurança</h4>
+        <p>Caçambas revisadas e certificadas. Sua obra protegida do início ao fim.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+        </div>
+        <h4>Atendimento 24/7</h4>
+        <p>Resposta rápida pelo WhatsApp a qualquer hora do dia ou da noite.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===== FOOTER CTA ===== -->
+<section class="footer-cta">
+  <div class="big-icon">
+    <svg viewBox="0 0 24 24" fill="white" width="36" height="36">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </div>
+  <h2>Ainda tem dúvidas?</h2>
+  <p>Fale com a gente pelo WhatsApp e receba um orçamento personalizado em minutos.</p>
+  <a href="https://wa.me/5511951972304?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20um%20orçamento%20de%20caçamba." target="_blank" class="btn-large">
+    <span class="icon-svg"><svg><use href="#icon-whatsapp"/></svg></span> Falar no WhatsApp
+  </a>
+</section>
+
+<!-- ===== SELECTION BAR ===== -->
+<div class="selection-bar" id="selectionBar">
+  <span class="icon-svg"><svg><use href="#icon-clipboard"/></svg></span>
+  <span class="summary" id="selectionSummary">Nenhuma opção selecionada</span>
+  <a href="#" id="selectionLink" target="_blank" class="btn-mini">
+    <span class="icon-svg"><svg><use href="#icon-whatsapp"/></svg></span> Pedir no WhatsApp
+  </a>
+</div>
+
+<!-- ===== FLOATING WHATSAPP ===== -->
+<a href="https://wa.me/5511951972304?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20um%20orçamento%20de%20caçamba." target="_blank" class="float-whatsapp" title="Fale conosco no WhatsApp">
+  <span class="icon-svg"><svg><use href="#icon-whatsapp"/></svg></span>
+</a>
+
+<script>
+  const plans = [
+    {
+      id: 'mini',
+      name: 'Caçamba Mini',
+      size: '3m³',
+      iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`,
+      basePrice: 180,
+      features: [
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, text: 'Ideal para pequenas reformas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>`, text: 'Cabe em garagens e corredores' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`, text: 'Entrega e retirada inclusas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`, text: 'Suporte via WhatsApp' }
+      ]
+    },
+    {
+      id: 'media',
+      name: 'Caçamba Média',
+      size: '5m³',
+      iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`,
+      basePrice: 280,
+      popular: true,
+      features: [
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, text: 'Perfeita para reformas residenciais' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>`, text: 'Alta capacidade de carga' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`, text: 'Entrega e retirada inclusas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`, text: 'Suporte via WhatsApp' }
+      ]
+    },
+    {
+      id: 'grande',
+      name: 'Caçamba Grande',
+      size: '7m³',
+      iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 9h4"/><path d="M10 13h4"/></svg>`,
+      basePrice: 380,
+      features: [
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, text: 'Para obras maiores' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`, text: 'Máxima capacidade de volume' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`, text: 'Entrega e retirada inclusas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`, text: 'Suporte via WhatsApp' }
+      ]
+    },
+    {
+      id: 'extra',
+      name: 'Caçamba Extra',
+      size: '10m³',
+      iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>`,
+      basePrice: 520,
+      features: [
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 9h4"/><path d="M10 13h4"/></svg>`, text: 'Grandes construções' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="m17 11-3-3 5.5-5.5a2.12 2.12 0 0 1 3 3L17 11z"/><path d="m10 18-3-3 5.5-5.5a2.12 2.12 0 0 1 3 3L10 18z"/><path d="M2 22l3-3"/><path d="M6 18l3 3"/></svg>`, text: 'Demolições e reformas pesadas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`, text: 'Entrega e retirada inclusas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`, text: 'Suporte via WhatsApp' }
+      ]
+    },
+    {
+      id: 'industrial',
+      name: 'Caçamba Industrial',
+      size: '15m³',
+      iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 9h4"/><path d="M10 13h4"/></svg>`,
+      basePrice: 750,
+      features: [
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>`, text: 'Obras industriais' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="m17 11-3-3 5.5-5.5a2.12 2.12 0 0 1 3 3L17 11z"/><path d="m10 18-3-3 5.5-5.5a2.12 2.12 0 0 1 3 3L10 18z"/><path d="M2 22l3-3"/><path d="M6 18l3 3"/></svg>`, text: 'Demolições de grande porte' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`, text: 'Entrega e retirada inclusas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`, text: 'Suporte via WhatsApp' }
+      ]
+    },
+    {
+      id: 'rollon',
+      name: 'Roll-on / Roll-off',
+      size: '20m³',
+      iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`,
+      basePrice: 980,
+      features: [
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`, text: 'Maior volume disponível' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 9h4"/><path d="M10 13h4"/></svg>`, text: 'Obras comerciais e industriais' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`, text: 'Entrega e retirada inclusas' },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`, text: 'Suporte via WhatsApp' }
+      ]
+    }
+  ];
+
+  let selectedDays = 1;
+  let selectedPlan = null;
+  const phone = '5511951972304'; // SUBSTITUA PELO SEU NÚMERO REAL
+
+  function formatCurrency(value) {
+    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function calculatePrice(basePrice, days) {
+    let multiplier = 1;
+    if (days >= 3) multiplier = 2.5;
+    if (days >= 5) multiplier = 3.8;
+    if (days >= 7) multiplier = 5.0;
+    if (days >= 10) multiplier = 6.5;
+    if (days >= 15) multiplier = 9.0;
+    return Math.round(basePrice * multiplier);
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('cardsGrid');
+    grid.innerHTML = plans.map(plan => {
+      const price = calculatePrice(plan.basePrice, selectedDays);
+      const daily = Math.round(price / selectedDays);
+      return `
+        <div class="card ${plan.popular ? 'card-popular' : ''}">
+          <div class="card-icon">${plan.iconSvg}</div>
+          <h3>${plan.name}</h3>
+          <div class="size-label">${plan.size} de capacidade</div>
+          <div class="price">${formatCurrency(price)}</div>
+          <div class="price-period">por ${selectedDays} dia${selectedDays > 1 ? 's' : ''} (${formatCurrency(daily)}/dia)</div>
+          <ul class="features-list">
+            ${plan.features.map(f => `<li><span class="check"><span class="icon-svg">${f.icon}</span></span> ${f.text}</li>`).join('')}
+          </ul>
+          <a href="#" class="btn-whatsapp" onclick="selectPlan('${plan.id}', ${price}); return false;">
+            <span class="icon-svg"><svg><use href="#icon-whatsapp"/></svg></span> Quero esta caçamba
+          </a>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function selectDuration(days) {
+    selectedDays = days;
+    document.querySelectorAll('.duration-btn').forEach(btn => {
+      btn.classList.toggle('active', parseInt(btn.dataset.days) === days);
+    });
+    renderCards();
+    if (selectedPlan) {
+      const plan = plans.find(p => p.id === selectedPlan.id);
+      const newPrice = calculatePrice(plan.basePrice, days);
+      selectPlan(plan.id, newPrice);
+    }
+  }
+
+  function selectPlan(planId, price) {
+    const plan = plans.find(p => p.id === planId);
+    selectedPlan = { ...plan, price, days: selectedDays };
+
+    const message = encodeURIComponent(
+      `Olá! Vim pelo site da CaçambaExpress e gostaria de alugar uma caçamba.
+
+` +
+      `📋 Opção escolhida:
+` +
+      `• Caçamba: ${plan.name} (${plan.size})
+` +
+      `• Duração: ${selectedDays} dia${selectedDays > 1 ? 's' : ''}
+` +
+      `• Valor: ${formatCurrency(price)}
+
+` +
+      `Aguardo retorno para confirmar o agendamento. Obrigado!`
+    );
+
+    const waLink = `https://wa.me/${phone}?text=${message}`;
+
+    document.getElementById('selectionSummary').textContent =
+      `${plan.name} (${plan.size}) — ${selectedDays} dia${selectedDays > 1 ? 's' : ''} — ${formatCurrency(price)}`;
+    document.getElementById('selectionLink').href = waLink;
+    document.getElementById('selectionBar').classList.add('visible');
+
+    setTimeout(() => {
+      document.getElementById('selectionBar').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  }
+
+  renderCards();
+
+
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+      document.body.style.overflow = '';
+    }
+  });
+
+</script>
+
+
+
+<!-- ===== FOOTER LEGAL ===== -->
+<footer style="background:#0f172a; color:#94a3b8; padding:40px 20px; text-align:center; font-size:0.9rem;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:20px;">
+      <button onclick="openModal('modal-privacidade')" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-size:0.9rem; transition:color 0.2s; font-family:inherit;" onmouseover="this.style.color='#22c55e'" onmouseout="this.style.color='#94a3b8'">Política de Privacidade</button>
+      <span style="color:#334155;">|</span>
+      <button onclick="openModal('modal-termos')" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-size:0.9rem; transition:color 0.2s; font-family:inherit;" onmouseover="this.style.color='#22c55e'" onmouseout="this.style.color='#94a3b8'">Termos de Uso</button>
+    </div>
+    <p style="margin:0;">© 2026 CaçambaExpress. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- ===== MODAL POLÍTICA DE PRIVACIDADE ===== -->
+<div id="modal-privacidade" class="modal-overlay" onclick="closeModal('modal-privacidade')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Política de Privacidade</h3>
+      <button class="modal-close" onclick="closeModal('modal-privacidade')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Última atualização:</strong> 10 de agosto de 2026</p>
+      <h4>1. Coleta de Dados</h4>
+      <p>A CaçambaExpress coleta apenas os dados necessários para o atendimento, como nome, telefone, endereço de entrega e dados da obra. Essas informações são obtidas diretamente pelo WhatsApp ou por meio de formulários no site.</p>
+      <h4>2. Uso das Informações</h4>
+      <p>Seus dados são utilizados exclusivamente para:</p>
+      <ul>
+        <li>Processar e confirmar seu pedido de aluguel de caçamba;</li>
+        <li>Realizar a entrega e retirada no endereço informado;</li>
+        <li>Entrar em contato sobre o status do serviço;</li>
+        <li>Emitir nota fiscal e documentação da obra, quando necessário.</li>
+      </ul>
+      <h4>3. Compartilhamento</h4>
+      <p>Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros, exceto quando exigido por lei ou para cumprimento de obrigações fiscais e trabalhistas.</p>
+      <h4>4. Segurança</h4>
+      <p>Adotamos medidas de segurança técnicas e administrativas para proteger suas informações contra acessos não autorizados, perda ou destruição.</p>
+      <h4>5. Seus Direitos</h4>
+      <p>Você pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento, entrando em contato pelo WhatsApp.</p>
+      <h4>6. Cookies</h4>
+      <p>Este site utiliza cookies apenas para melhorar a experiência de navegação. Não utilizamos cookies de rastreamento de terceiros.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL TERMOS DE USO ===== -->
+<div id="modal-termos" class="modal-overlay" onclick="closeModal('modal-termos')">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span> Termos de Uso</h3>
+      <button class="modal-close" onclick="closeModal('modal-termos')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Última atualização:</strong> 10 de agosto de 2026</p>
+      <h4>1. Aceitação dos Termos</h4>
+      <p>Ao utilizar o site da CaçambaExpress e solicitar nossos serviços, você concorda com estes Termos de Uso. Caso não concorde, não utilize nossos serviços.</p>
+      <h4>2. Serviços Oferecidos</h4>
+      <p>A CaçambaExpress oferece aluguel de caçambas para descarte de entulho, incluindo entrega, permanência no local pelo período contratado e retirada com destinação adequada.</p>
+      <h4>3. Condições de Uso da Caçamba</h4>
+      <ul>
+        <li>É proibido o descarte de materiais perigosos, inflamáveis, tóxicos ou líquidos;</li>
+        <li>O peso máximo deve respeitar a capacidade indicada para cada tamanho;</li>
+        <li>O cliente é responsável por garantir acesso adequado para caminhão no local;</li>
+        <li>A caçamba não pode ser movida de local sem autorização prévia.</li>
+      </ul>
+      <h4>4. Pagamento</h4>
+      <p>Os valores são informados no ato do orçamento via WhatsApp. O pagamento pode ser realizado via PIX, transferência bancária ou dinheiro, conforme combinado.</p>
+      <h4>5. Cancelamento</h4>
+      <p>Cancelamentos devem ser comunicados com antecedência mínima de 24 horas. Em caso de cancelamento após a entrega da caçamba, será cobrada taxa de deslocamento do caminhão.</p>
+      <h4>6. Limitação de Responsabilidade</h4>
+      <p>A CaçambaExpress não se responsabiliza por danos causados por má utilização da caçamba ou por descarte inadequado de materiais proibidos pelo cliente.</p>
+      <h4>7. Alterações nos Termos</h4>
+      <p>Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações entram em vigor assim que publicadas no site.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
